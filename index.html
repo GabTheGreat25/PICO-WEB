@@ -1,0 +1,125 @@
+<!-- import time import machine import ultrasonic import network import socket import
+html ssid = "YOUR_WIFI_SSID" password = "YOUR_WIFI_PASSWORD" wlan =
+network.WLAN(network.STA_IF) wlan.active(True) wlan.connect(ssid, password)
+while not wlan.isconnected(): time.sleep(1) print("Connecting to WiFi...")
+print("Connected to WiFi!") sensor = ultrasonic.Ultrasonic(trigger_pin=15,
+echo_pin=16) water_level_sensor = machine.ADC(26) buzzer = machine.Pin(27,
+machine.Pin.OUT) vibration_sensor = machine.ADC(28) html = """<!DOCTYPE html> -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sensor Data</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        text-align: center;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      .parallax {
+        background-image: url("https://i.ytimg.com/vi/EWsMnA1-MTw/maxresdefault.jpg");
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+      }
+      .card {
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        width: 60%;
+        margin-top: 20px;
+      }
+      h1 {
+        color: #222;
+      }
+      p {
+        color: #555;
+        margin-bottom: 20px;
+        font-size: 18px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 12px 16px;
+        text-align: left;
+      }
+      th {
+        background-color: #f3f3f3;
+        color: #555;
+        font-weight: bold;
+      }
+      tr:nth-child(even) {
+        background-color: #f7f7f7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parallax"></div>
+    <div class="container">
+      <h1>Welcome to Smart Blind Stick</h1>
+      <p>
+        Experience the future of navigation for the visually impaired. Our Smart
+        Blind Stick integrates cutting-edge sensors and technology to provide
+        real-time data for enhanced safety and independence.
+      </p>
+      <div class="card">
+        <h2>Sensor Data</h2>
+        <table>
+          <tr>
+            <th>Sensor</th>
+            <th>Value</th>
+          </tr>
+          <tr>
+            <td>Ultra Sonic</td>
+            <td>{distance}</td>
+          </tr>
+          <tr>
+            <td>Water Level</td>
+            <td>{water_level}</td>
+          </tr>
+          <tr>
+            <td>Gyro</td>
+            <td>{angle_position}</td>
+          </tr>
+          <tr>
+            <td>Buzzer</td>
+            <td>{buzzer}</td>
+          </tr>
+          <tr>
+            <td>Vibration Sensor</td>
+            <td>{vibration}</td>
+          </tr>
+          <tr>
+            <td>LCD</td>
+            <td>{battery_level}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- """ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) server.bind(('',
+80)) server.listen(1) while True: connection, address = server.accept() request
+= connection.recv(1024) print(request) distance = sensor.distance() water_level
+= water_level_sensor.read_u16() / 65535.0 * 100 buzzer_state = buzzer.value()
+vibration_state = vibration_sensor.read_u16() / 65535.0 * 100 html =
+html.format(distance=distance, water_level=water_level, buzzer=buzzer_state,
+vibration=vibration_state) connection.sendall(html) connection.close() -->
